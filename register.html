@@ -1,0 +1,91 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Register - Banana Quiz</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="brand"><a href="index.html">🍌 Banana Math Quiz</a></div>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="game.html">Game</a>
+      <a href="leaderboard.html">Leaderboard</a>
+      <a href="logout.php">Logout</a>
+    </nav>
+  </header>
+
+  <main class="container">
+    <h1>Register</h1>
+
+    <div class="mode-select">
+      <label><input type="radio" name="mode" value="kids" checked> Kids (Easy)</label>
+      <label><input type="radio" name="mode" value="adult"> Adult (Hard)</label>
+    </div>
+    <br>
+
+    <form id="registerForm">
+      <div class="form-row">
+        <input id="name" name="name" placeholder="Name" required><br><br>
+      </div>
+
+      <div id="adultFields" style="display:none;">
+        <div class="form-row">
+          <input id="email" name="email" type="email" placeholder="Email"><br><br>
+        </div>
+        <div class="form-row">
+          <input id="password" name="password" type="password" placeholder="Password"><br><br><br>
+        </div>
+      </div>
+
+      <button class="btn" type="submit"><h3>Register</h3></button>
+    </form>
+
+    <div id="msg" class="message"></div>
+  </main>
+
+   <div class="end-text">
+				<p>Copyright © @2025. All Rights Reserved.</p>
+			</div>
+
+<script>
+document.querySelectorAll('input[name="mode"]').forEach(r=>{
+  r.addEventListener('change', ()=> {
+    const adult = document.querySelector('input[name="mode"]:checked').value === 'adult';
+    document.getElementById('adultFields').style.display = adult ? 'block' : 'none';
+
+    // FIX: toggle required attributes
+    document.getElementById('email').required = adult;
+    document.getElementById('password').required = adult;
+  });
+});
+
+
+document.getElementById('registerForm').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const mode = document.querySelector('input[name="mode"]:checked').value;
+  const name = document.getElementById('name').value.trim();
+  const payload = { mode, name };
+  if(mode === 'adult') {
+    payload.email = document.getElementById('email').value.trim();
+    payload.password = document.getElementById('password').value;
+  }
+  const res = await fetch('register.php', {
+    method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify(payload)
+  });
+  const data = await res.json();
+  document.getElementById('msg').textContent = data.message;
+  if(data.success) {
+    // if kids auto-login, redirect to game
+    if(data.autologin) {
+      window.location = 'game.html';
+    } else {
+      // go to home/login for adults
+      setTimeout(()=> window.location = 'index.html', 900);
+    }
+  }
+});
+</script>
+</body>
+</html>
