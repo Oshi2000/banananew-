@@ -1,0 +1,57 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Login - Banana Quiz</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="brand"><a href="index.html">🍌 Banana Math Quiz</a></div>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="game.html">Game</a>
+      <a href="leaderboard.html">Leaderboard</a>
+      <a href="logout.php">Logout</a>
+    </nav>
+  </header>
+
+  <main class="container">
+    <h2>Login (Adults only)</h2>
+    <form id="loginForm">
+      <div class="form-row">
+        <label>Email</label><br><br>
+        <input id="email" name="email" type="email" required><br><br>
+      </div>
+      <div class="form-row">
+        <label>Password</label><br><br>
+        <input id="password" name="password" type="password" required><br><br><br>
+      </div>
+      <button class="btn" type="submit"><h3>Login</h3></button>
+    </form>
+    <div id="msg" class="message"></div>
+  </main>
+
+   <div class="end-text">
+				<p>Copyright © @2025. All Rights Reserved.</p>
+			</div>
+
+<script>
+document.getElementById('loginForm').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const payload = {
+    email: document.getElementById('email').value.trim(),
+    password: document.getElementById('password').value
+  };
+  const res = await fetch('login.php', {
+    method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify(payload)
+  });
+  const data = await res.json();
+  document.getElementById('msg').textContent = data.message;
+  if(data.success) {
+    window.location = 'game.html';
+  }
+});
+</script>
+</body>
+</html>
