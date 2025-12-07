@@ -1,0 +1,99 @@
+:root{
+  --bg:#0f0f17;
+  --panel:#161622;
+  --muted:#9aa0b1;
+  --accent:#bfa73b;
+  --btn:#232233;
+}
+*{box-sizing:border-box}
+body{
+  margin:0; font-family:Inter, system-ui, Arial; background:#012636;
+  color:#dfe6f3;
+}
+.site-header{
+  display:flex; justify-content:space-between; align-items:center; padding:30px 36px; background:#011926;
+}
+.site-header .brand a{font-weight:700; font-size: 25px; color: #fff; text-decoration: none;}
+
+nav a{position: relative;
+	font-size: 1.1em;
+	color: #fff;
+	text-decoration: none;
+	font-weight: 500;
+	margin-left: 40px;}
+
+nav a::after{content: '';
+	position: absolute;
+	left: 0;
+	bottom: -6px;
+	width: 100%;
+	height: 3px;
+	background: #fff;
+	border-radius: 5px;
+	transform-origin: center;
+	transform: scaleX(0);
+	transition: transform .5s;}
+
+nav a:hover::after{transform-origin: center;
+	transform: scaleX(1);}
+
+.container{max-width:980px; margin:60px auto; background:#011926; padding:28px; border-radius:12px;}
+
+.big-actions{display:flex; gap:30px; margin:24px 0;}
+
+.btn{background:#162a2e; color:#fff; border:none; padding:4px 50px; border-radius:8px; cursor:pointer;text-decoration: none;transition: transform 0.2s, box-shadow 0.3s;}
+
+.btn:hover{transform: scale(1.08);
+  box-shadow: 0 0 30px rgb(2, 46, 66);}
+
+.btn.big{font-size:20px; padding:16px 26px;}
+
+.btn.big:hover{ transform: scale(1.08);
+  box-shadow: 0 0 30px rgb(2, 46, 66);}
+
+.message{margin-top:12px;color:#bff0c3}
+
+.container img{margin-top: 60px;}
+
+.form-row{margin:12px 0}
+
+.form-row input{padding:10px 10px; border-radius:6px; border:1px solid rgba(255,255,255,0.05); background:rgba(255,255,255,0.02); color:#fff; width:100%}
+
+.meta{display:flex; gap:18px; align-items:center; margin-bottom:12px}
+
+.game-grid{display:flex; gap:24px;}
+
+.question-area{flex:1}
+
+.answers{width:320px; display:flex; flex-direction:column; gap:15px;}
+
+.answerBtn{padding:18px; font-size:18px; text-align:center;}
+
+.answerBtn.correct{outline:3px solid #3bd37b}
+
+.answerBtn.wrong{opacity:0.6; transform:scale(0.98); outline:3px solid #850000}
+
+.controls{margin-top:12px; display:flex; gap: 15px;}
+
+.small{padding:6px 10px; font-size:14px}
+
+.leaderboard{width:100%;border-collapse:collapse;margin-top:12px}
+
+.leaderboard th, .leaderboard td{padding:8px; text-align:left; border-bottom:1px solid rgba(255,255,255,0.03)}
+
+.note{margin-top:12px; color:#c5c8d6}
+
+.end-text{
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+	background-color: #011926;
+	text-align: center;
+	padding: 10px;
+}
+
+.end-text p{
+	color: #fff;
+	text-transform: capitalize;
+}
