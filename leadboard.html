@@ -1,0 +1,68 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Leaderboard - Banana Quiz</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="brand"><a href="index.html">🍌 Banana Math Quiz</a></div>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="game.html">Game</a>
+      <a href="leaderboard.html">Leaderboard</a>
+      <a href="logout.php">Logout</a>
+    </nav>
+  </header>
+
+  <main class="container">
+    <h1>Leaderboard</h1>
+    <div>
+      <label>Mode: 
+        <select id="modeSel">
+          <option value="">All</option>
+          <option value="kids">Kids</option>
+          <option value="adult">Adult</option>
+        </select>
+      </label>
+    </div>
+
+    <table id="board" class="leaderboard">
+      <thead><tr><th>#</th><th>Name</th><th>Score</th><th>Date</th></tr></thead>
+      <tbody></tbody>
+    </table>
+
+    <div id="myPlace" class="note"></div>
+  </main>
+
+   <div class="end-text">
+				<p>Copyright © @2025. All Rights Reserved.</p>
+			</div>
+
+<script>
+async function loadBoard() {
+  const mode = document.getElementById('modeSel').value;
+  const url = 'leaderboard_api.php' + (mode ? '?mode='+encodeURIComponent(mode) : '');
+  const res = await fetch(url);
+  const data = await res.json();
+  const tbody = document.querySelector('#board tbody');
+  tbody.innerHTML = '';
+  if(!data.success) return;
+  data.top.forEach((row, i) => {
+    const tr = document.createElement('tr');
+    tr.innerHTML = `<td>${i+1}</td><td>${row.name}</td><td>${row.score}</td><td>${row.created_at}</td>`;
+    tbody.appendChild(tr);
+  });
+  if(data.me) {
+    document.getElementById('myPlace').textContent = `My latest score: ${data.me.score}. Your rank: #${data.me.rank}`;
+  } else {
+    document.getElementById('myPlace').textContent = '';
+  }
+}
+
+document.getElementById('modeSel').addEventListener('change', loadBoard);
+loadBoard();
+</script>
+</body>
+</html>
